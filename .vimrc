@@ -29,8 +29,9 @@ Plugin 'vim-airline/vim-airline-themes'
 
 " ctrlp file search
 Plugin 'ctrlpvim/ctrlp.vim'
-
+Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -63,7 +64,7 @@ set nocompatible
 
 set background=dark
 set t_Co=256
-" colorscheme solarized
+colorscheme solarized
 
 set encoding=utf-8
 set incsearch
@@ -93,23 +94,26 @@ inoremap {<CR>  {<CR>}<Esc>O
 inoremap {{     {
 inoremap {}     {}
 
-highlight Normal ctermfg=255 ctermbg=234
-highlight LineNr guifg=grey50 ctermfg=245
-highlight Number cterm=none ctermfg=196
-highlight Operator cterm=bold ctermfg=214
-highlight Type cterm=bold ctermfg=green
-highlight Comment ctermfg=39
-highlight String ctermfg=47
-highlight Keyword cterm=bold ctermfg=yellow
-highlight Conditional cterm=bold ctermfg=214
-highlight Repeat cterm=bold ctermfg=214
-highlight Character ctermfg=yellow
-highlight PreProc cterm=bold ctermfg=45
-highlight Constant cterm=bold ctermfg=1
-highlight Statement cterm=bold ctermfg=yellow
-highlight Function cterm=bold ctermfg=208
-highlight Search cterm=NONE ctermfg=NONE ctermbg=23
-highlight VertSplit cterm=None ctermfg=2 ctermbg=NONE
+" custom color settings 
+" colors may be subjected to terminal pallete settings
+" highlight Normal ctermfg=255 ctermbg=234
+" highlight LineNr guifg=grey50 ctermfg=245
+" highlight Number cterm=none ctermfg=196
+" highlight Operator cterm=bold ctermfg=214
+" highlight Type cterm=bold ctermfg=green
+" highlight Comment ctermfg=39
+" highlight String ctermfg=47
+" highlight Keyword cterm=bold ctermfg=yellow
+" highlight Conditional cterm=bold ctermfg=214
+" highlight Repeat cterm=bold ctermfg=214
+" highlight Character ctermfg=yellow
+" highlight PreProc cterm=bold ctermfg=45
+" highlight Constant cterm=bold ctermfg=1
+" highlight Statement cterm=bold ctermfg=yellow
+" highlight Function cterm=bold ctermfg=208
+" highlight Search cterm=NONE ctermfg=NONE ctermbg=23
+highlight VertSplit cterm=None ctermfg=242 ctermbg=NONE
+highlight CursorLineNr guifg=grey50 ctermfg=248
 
 
 """""""""""""""""
@@ -247,6 +251,20 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
 " CtrlP --------------------------------
+
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
+" EasyMotion ---------------------------
+
+" <Leader>f{char} to move to {char}
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+" Move to line
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
