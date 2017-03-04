@@ -18,9 +18,9 @@ Plugin 'VundleVim/Vundle.vim'
 " better auto-completion
 Plugin 'Shougo/neocomplcache.vim'
 
-" better file browser
+" file browser
 Plugin 'scrooloose/nerdtree'
-" better commenter
+" code commenter
 Plugin 'scrooloose/nerdcommenter'
 
 " Airline
@@ -32,6 +32,9 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'altercation/vim-colors-solarized'
+
+" Plugin 'fatih/vim-go'
+" Plugin 'python-mode/python-mode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -48,7 +51,7 @@ filetype plugin indent on    " required
 
 
 """"""""""""""""""""""""
-" vim config 
+" vim config
 """"""""""""""""""""""""
 
 filetype on
@@ -60,41 +63,143 @@ syntax enable
 syntax on
 
 " no vi-compatile
-set nocompatible
+" set nocompatible
 
 set background=dark
 set t_Co=256
-colorscheme solarized
 
 set encoding=utf-8
-set incsearch
-set hlsearch    " highlight search matching
+" Use Unix as the standard file type
+set ffs=unix,dos,mac
+" Set to auto read when a file is changed from the outside
+set autoread
+" Set how many lines of history VIM has to remember
+set history=1000
+
+" Show line numbers
 set number
+" Show relative number to current line
+set relativenumber
+" Show current cursor position
 set ruler
+" Display status line
+set laststatus=2
+
+" Makes search act like search in modern browsers
+set incsearch
+" Highlight search matching
+set hlsearch
+" Case insensitive when searching
 set ignorecase
+" When searching try to be smart about cases
 set smartcase
+
+" Always set autoindenting on
+set autoindent
 set smartindent
-set autoindent    " always set autoindenting on
-" tabs and space 
-set expandtab  " expand tab to space
+" Expand tab to space
+set expandtab
+" Insert tabs on the start of a line according to context
 set smarttab
+" 4 space tab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
-set history=10000
-set showcmd     " show incomplete cmds down the buttom
+" Show incomplete cmds down the buttom
+set showcmd
+" Show matching brackets
+set showmatch
+" Turn on the WiLd menu (Tab comand completion)
+set wildmenu
+" vsplit in right
+set splitright
+" Set 7 lines to the cursor - when moving vertically using j/k
+set scrolloff=7
+" ignore these files while expanding wild chars
+" set wildignore=*.o,*.pyc
+
+" Toggle Paste mode on and off
 set pastetoggle=<F2>
-set laststatus=2	" display status line
-set splitright      " vsplit in right
-set relativenumber
+" Configure backspace so it acts as it should act
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" Remap leader key to , (default \)
+let mapleader = ","
+let g:mapleader = ","
+
+" Python keyword highlight
+let python_highlight_all = 1
+au FileType python syn keyword pythonDecorator True None False self
+
+" cabbrev command aliases
+" :W sudo saves the file
+ca W w !sudo tee % > /dev/null
+ca te tabedit
+ca vh vert help
+
+
+"""""""""""""""""""""""""""""
+" Mappings
+"""""""""""""""""""""""""""""
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+" Remap - to $
+map - $
+" map space to page down
+nnoremap <Space> <C-d>
+" clear search highlights
+nnoremap <leader>n :nohl<CR>
+map <silent> <leader>ee :vs ~/.vimrc<cr>
+" Toggle paste mode on and off
+map <leader>p :setlocal paste!<cr>
+
+" Easier way to move between split windows
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-H> <C-W>h
+nnoremap <C-L> <C-W>l
+
+" navigate windows with meta(alt key) + arrows
+map <M-Left> <c-w>h
+map <M-Right> <c-w>l
+map <M-Up> <c-w>k
+map <M-Down> <c-w>j
+imap <M-Left> <ESC><c-w>h
+imap <M-Right> <ESC><c-w>l
+imap <M-Up> <ESC><c-w>k
+imap <M-Down> <ESC><c-w>j
+
+" navigate tabs with Alt+<number> (not working in gnome-terminal)
+nnoremap <A-1> 1gt
+nnoremap <A-2> 2gt
+nnoremap <A-3> 3gt
+nnoremap <A-4> 4gt
+nnoremap <A-5> 5gt
+nnoremap <A-0> :tablast<CR>
+
 " auto bracket completion
 inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
 inoremap {{     {
 inoremap {}     {}
 
-" custom color settings 
+" Speed up scrolling of the viewport slightly
+nnoremap <C-e> 2<C-e>
+nnoremap <C-y> 2<C-y>
+
+
+"""""""""""""""""""""""""""
+" Color customization
+"""""""""""""""""""""""""""
+
+colorscheme solarized
+" colorscheme railscasts
+" colorscheme zenburn
+
+" custom color settings ---------------------
 " colors may be subjected to terminal pallete settings
 " highlight Normal ctermfg=255 ctermbg=234
 " highlight LineNr guifg=grey50 ctermfg=245
@@ -116,39 +221,6 @@ highlight VertSplit cterm=None ctermfg=242 ctermbg=NONE
 highlight CursorLineNr guifg=grey50 ctermfg=248
 
 
-"""""""""""""""""
-" navigate windows with meta+arrows
-map <M-Right> <c-w>l
-map <M-Left> <c-w>h
-map <M-Up> <c-w>k
-map <M-Down> <c-w>j
-imap <M-Right> <ESC><c-w>l
-imap <M-Left> <ESC><c-w>h
-imap <M-Up> <ESC><c-w>k
-imap <M-Down> <ESC><c-w>j
-
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-L> <C-W>l
-nnoremap <C-H> <C-W>h
-
-" navigate tabs with Alt+<number> (not working in gnome-terminal)
-nnoremap <A-1> 1gt
-nnoremap <A-2> 2gt
-nnoremap <A-3> 3gt
-nnoremap <A-4> 4gt
-nnoremap <A-5> 5gt
-nnoremap <A-0> :tablast<CR>
-
-" map space to page down
-nnoremap <Space> <C-d>
-
-nnoremap <leader>n :nohl<CR>
-
-" save as sudo
-ca w!! w !sudo tee "%"
-
-
 """"""""""""""""""""""""""
 " Plugin settings
 """"""""""""""""""""""""""
@@ -156,7 +228,7 @@ ca w!! w !sudo tee "%"
 " NeoComplCache ------------------------------
 
 " most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make 
+" (docs aren't good, had to do a lot of trial and error to make
 " it play nice)
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_ignore_case = 1
@@ -215,7 +287,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 " Close popup by <Space>.
 "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 
-" NERDTree ----------------------------- 
+" NERDTree -----------------------------
 
 " toggle nerdtree display
 map <F3> :NERDTreeToggle<CR>
@@ -244,7 +316,7 @@ let g:NERDTrimTrailingWhitespace = 1
 " Airline ------------------------------
 
 let g:airline_powerline_fonts = 0
-let g:airline_theme = 'serene' 
+let g:airline_theme = 'serene'
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
