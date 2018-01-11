@@ -125,6 +125,9 @@ set pastetoggle=<F2>
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
+" Go up from current directory until it finds tags file
+set tags=./tags;,tags;
+
 " Remap leader key to , (default \)
 let mapleader = ","
 let g:mapleader = ","
@@ -233,7 +236,7 @@ highlight CursorLineNr guifg=grey50 ctermfg=248
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_ignore_case = 1
 let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_fuzzy_completion = 1
 let g:neocomplcache_enable_camel_case_completion = 1
 let g:neocomplcache_enable_underbar_completion = 1
