@@ -114,8 +114,8 @@ set showmatch
 set wildmenu
 " vsplit in right
 set splitright
-" Set 7 lines to the cursor - when moving vertically using j/k
-set scrolloff=7
+" Set 5 lines to the cursor - when moving vertically using j/k
+set scrolloff=5
 " ignore these files while expanding wild chars
 " set wildignore=*.o,*.pyc
 
@@ -192,6 +192,9 @@ inoremap {}     {}
 " Speed up scrolling of the viewport slightly
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
+
+" map Ctr-n to Ctr-] and move cursor to screen top
+nnoremap <C-n> <C-]>zt
 
 
 """""""""""""""""""""""""""
