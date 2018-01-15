@@ -324,7 +324,7 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:airline_powerline_fonts = 0
 let g:airline_theme = 'serene'
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
@@ -346,4 +346,5 @@ nmap <Leader>k <Plug>(easymotion-k)
 " Move to word
 nmap <Leader>w <Plug>(easymotion-w)
 nmap <Leader>b <Plug>(easymotion-b)
-nmap <Leader>W <Plug>(easymotion-bd-w)
+nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader><Leader>j <Plug>(easymotion-bd-jk)
