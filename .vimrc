@@ -335,14 +335,15 @@ let g:ctrlp_cmd = 'CtrlP'
 
 " EasyMotion ---------------------------
 
-" <Leader>f{char} to move to {char}
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+nmap s <Plug>(easymotion-s2)
+" <Leader>f{char} to move to {char}
+nmap <Leader>f <Plug>(easymotion-f)
+nmap <Leader>F <Plug>(easymotion-F)
+" Move to line (j downward, i upward)
+nmap <Leader>j <Plug>(easymotion-j)
+nmap <Leader>k <Plug>(easymotion-k)
 " Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+nmap <Leader>w <Plug>(easymotion-w)
+nmap <Leader>b <Plug>(easymotion-b)
+nmap <Leader>W <Plug>(easymotion-bd-w)
