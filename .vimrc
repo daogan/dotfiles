@@ -184,10 +184,10 @@ nnoremap <A-5> 5gt
 nnoremap <A-0> :tablast<CR>
 
 " auto bracket completion
-inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
-inoremap {{     {
-inoremap {}     {}
+" inoremap {      {}<Left>
+" inoremap {{     {
+" inoremap {}     {}
 
 " Speed up scrolling of the viewport slightly
 nnoremap <C-e> 2<C-e>
@@ -201,9 +201,8 @@ nnoremap <C-n> <C-]>zt
 " Color customization
 """""""""""""""""""""""""""
 
-colorscheme solarized
-" colorscheme railscasts
-" colorscheme zenburn
+colorscheme PaperColor
+" colorscheme solarized, deus, zenburn, buddy, Papercolor
 
 " custom color settings ---------------------
 " colors may be subjected to terminal pallete settings
@@ -301,6 +300,8 @@ map <F3> :NERDTreeToggle<CR>
 nmap ,t :NERDTreeFind<CR>
 " don;t show these file types
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
+" enable line numbers
+" let NERDTreeShowLineNumbers=1
 
 " NERDCOMMENTER ------------------------
 
