@@ -15,15 +15,11 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" better auto-completion
 Plugin 'Shougo/neocomplcache.vim'
-
-" file browser
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
-" code commenter
 Plugin 'scrooloose/nerdcommenter'
 
-" Airline
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -31,7 +27,11 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'Raimondi/delimitMate'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'jistr/vim-nerdtree-tabs'
 
 " Plugin 'fatih/vim-go'
 " Plugin 'python-mode/python-mode'
@@ -134,13 +134,16 @@ let g:mapleader = ","
 
 " Python keyword highlight
 let python_highlight_all = 1
-au FileType python syn keyword pythonDecorator True None False self
+" au FileType python syn keyword pythonDecorator True None False self
+let g:pyindent_open_paren = ''
 
 " cabbrev command aliases
 " :W sudo saves the file
 ca W w !sudo tee % > /dev/null
 ca te tabedit
 ca vh vert help
+ca sv so ~/.vimrc
+ca gb Gblame
 
 
 """""""""""""""""""""""""""""
@@ -184,7 +187,7 @@ nnoremap <A-5> 5gt
 nnoremap <A-0> :tablast<CR>
 
 " auto bracket completion
-inoremap {<CR>  {<CR>}<Esc>O
+" inoremap {<CR>  {<CR>}<Esc>O
 " inoremap {      {}<Left>
 " inoremap {{     {
 " inoremap {}     {}
@@ -194,14 +197,15 @@ nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
 " map Ctr-n to Ctr-] and move cursor to screen top
-nnoremap <C-n> <C-]>zt
+nnoremap <C-n> <C-]>zz
+" nnoremap m *
 
 
 """""""""""""""""""""""""""
 " Color customization
 """""""""""""""""""""""""""
 
-colorscheme PaperColor
+colorscheme solarized
 " colorscheme solarized, deus, zenburn, buddy, Papercolor
 
 " custom color settings ---------------------
@@ -224,7 +228,9 @@ colorscheme PaperColor
 " highlight Search cterm=NONE ctermfg=NONE ctermbg=23
 highlight VertSplit cterm=None ctermfg=242 ctermbg=NONE
 highlight CursorLineNr guifg=grey50 ctermfg=248
+" highlight ExtraWhitespace ctermbg=52 guibg=52
 
+" match ExtraWhitespace /\s\+$/
 
 """"""""""""""""""""""""""
 " Plugin settings
@@ -232,65 +238,11 @@ highlight CursorLineNr guifg=grey50 ctermfg=248
 
 " NeoComplCache ------------------------------
 
-" most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make
-" it play nice)
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_ignore_case = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 0
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 2
-let g:neocomplcache_auto_completion_start_length = 2
-let g:neocomplcache_manual_completion_start_length = 2
-let g:neocomplcache_min_keyword_length = 2
-let g:neocomplcache_min_syntax_length = 2
-" complete with words from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
 
-" Enable heavy features.
-" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
+" YouCompleteMe ------------------------------
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
 
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
 
 " NERDTree -----------------------------
 
@@ -346,6 +298,17 @@ nmap <Leader>j <Plug>(easymotion-j)
 nmap <Leader>k <Plug>(easymotion-k)
 " Move to word
 nmap <Leader>w <Plug>(easymotion-w)
+nmap <Leader>e <Plug>(easymotion-e)
 nmap <Leader>b <Plug>(easymotion-b)
 nmap <Leader><Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader><Leader>j <Plug>(easymotion-bd-jk)
+
+" auto-pair ---------------------------
+" let g:AutoPairsUseInsertedCount = 1
+
+" delimitMate ------------------------
+let delimitMate_expand_cr = 1
+imap <expr> <CR> pumvisible() ? "\<c-y>" : "<Plug>delimitMateCR"
+
+" Open NERDTree on console vim startup.
+let g:nerdtree_tabs_open_on_console_startup = 1
